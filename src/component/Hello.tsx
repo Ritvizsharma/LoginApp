@@ -1,73 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {
     NavigationParams,
     NavigationScreenProp,
     NavigationState,
-  } from 'react-navigation';
+} from 'react-navigation';
 
 export interface Props {
     navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-interface State {
-    enthusiasmLevel: number;
-    username: string;
-}
+const Hello = ({ navigation }: Props) => {
 
-export default class Hello extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            enthusiasmLevel: this.props.navigation.state.params ? this.props.navigation.state.params.enthusiasmLevel || 1 : 1,
-            username: this.props.navigation.state.params? this.props.navigation.state.params.username || '' : '',
-        }; 
+    const [enthusiasmLevel, setenthusiasmLevel] = useState(navigation.state.params ? navigation.state.params.enthusiasmLevel || 1 : 1);
+    const [username, setusername] = useState(navigation.state.params ? navigation.state.params.username || '' : '');
+
+
+    function onIncrement() {
+        setenthusiasmLevel(enthusiasmLevel + 1);
+    }
+    function onDecrement() {
+        enthusiasmLevel > 0 ? setenthusiasmLevel(enthusiasmLevel - 1) : null;
+    }
+    function getExclamationMarks(numChars: number) {
+       return Array(numChars + 1).join('!');
     }
 
-    onIncrement = () =>
-        this.setState({ enthusiasmLevel: this.state.enthusiasmLevel + 1 });
-    onDecrement = () => {
-        const { enthusiasmLevel } = this.state;
-        enthusiasmLevel > 0 ?
-            this.setState({ enthusiasmLevel: this.state.enthusiasmLevel - 1 }) : null;
-    }
-    getExclamationMarks = (numChars: number) => Array(numChars + 1).join('!');
+    return (
+        <View style={styles.root}>
+            <Text style={styles.greeting}>
+                Hello{' '}
+                {username +
+                    getExclamationMarks(enthusiasmLevel)}
+            </Text>
 
-    render() {
-        const { enthusiasmLevel, username } = this.state;
-        return (
-            <View style={styles.root}>
-                <Text style={styles.greeting}>
-                    Hello{' '}
-                    {username +
-                        this.getExclamationMarks(enthusiasmLevel)}
-                </Text>
+            <View style={styles.buttons}>
+                <View style={styles.button}>
+                    <Button
+                        title="-"
+                        onPress={onDecrement}
+                        accessibilityLabel="decrement"
+                        color="red"
+                    />
+                </View>
 
-                <View style={styles.buttons}>
-                    <View style={styles.button}>
-                        <Button
-                            title="-"
-                            onPress={this.onDecrement}
-                            accessibilityLabel="decrement"
-                            color="red"
-                        />
-                    </View>
-
-                    <View style={styles.button}>
-                        <Button
-                            title="+"
-                            onPress={this.onIncrement}
-                            accessibilityLabel="increment"
-                            color="blue"
-                        />
-                    </View>
+                <View style={styles.button}>
+                    <Button
+                        title="+"
+                        onPress={onIncrement}
+                        accessibilityLabel="increment"
+                        color="blue"
+                    />
                 </View>
             </View>
-        );
-    }
+        </View>
+    );
 }
 
-// styles
+export default Hello;
+
 const styles = StyleSheet.create({
     root: {
         alignItems: 'center',

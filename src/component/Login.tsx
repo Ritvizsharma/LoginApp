@@ -4,70 +4,53 @@ import {
     NavigationParams,
     NavigationScreenProp,
     NavigationState,
-  } from 'react-navigation';
+} from 'react-navigation';
 
 export interface Props {
     navigation: NavigationScreenProp<NavigationState, NavigationParams>,
 }
 
-interface State {
-    username: string,
-    password: string,
-    showErrorBox: boolean,
-}
+const Login = ({ navigation }: Props) => {
 
-export default class Login extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        
-        // const [username, setUsername] = useState('');
-        // const [password, setPassword] = useState('');
-        // const [showErrorBox, setShowErrorBox] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [showErrorBox, setShowErrorBox] = useState(false);
 
-        this.state = {
-            username: '',
-            password: '',
-            showErrorBox: false,
-        };
-    }
 
-    onLogin = () => {
-        const { username, password } = this.state;
+    function onLogin() {
         if (username === 'ritviz@gmail.com' && password === '123456') {
-            this.setState({ showErrorBox: false });
-            this.props.navigation.navigate('HelloScreen', {
+            setShowErrorBox(false);
+            navigation.navigate('HelloScreen', {
                 name: 'Amused',
                 enthusiasmLevel: 4,
                 username,
             });
         } else {
-            this.setState({ showErrorBox: true })
+            setShowErrorBox(true);
         }
     }
 
-
-    render() {
-        const { username, password, showErrorBox } = this.state;
-        const errorText = 'Either username or password is incorrect'
-        return (
-            <SafeAreaView>
-                <KeyboardAvoidingView style={styles.root}>
-                    <View style={styles.loginView}>
-                        <Text style={styles.loginText}>LOGIN</Text>
-                    </View>
-                    <TextInput style={styles.usernameView} onChangeText={(username) => this.setState({ username })} value={username} />
-                    <TextInput style={styles.passwordView} onChangeText={(password) => this.setState({ password })} value={password} />
-                    <TouchableOpacity style={styles.loginButtonView} onPress={() => this.onLogin()}>
-                        <Text style={styles.loginButtonText}>Login</Text>
-                    </TouchableOpacity>
-                    {showErrorBox ? <View style={styles.errorView}>
-                        <Text style={styles.errorText}>{errorText}</Text>
-                    </View> : null}
-                </KeyboardAvoidingView>
-            </SafeAreaView>
-        );
-    }
+    const errorText = 'Either username or password is incorrect'
+    return (
+        <SafeAreaView>
+            <KeyboardAvoidingView style={styles.root}>
+                <View style={styles.loginView}>
+                    <Text style={styles.loginText}>LOGIN</Text>
+                </View>
+                <TextInput style={styles.usernameView} onChangeText={(username) => setUsername(username)} value={username} />
+                <TextInput style={styles.passwordView} onChangeText={(password) => setPassword(password)} value={password} />
+                <TouchableOpacity style={styles.loginButtonView} onPress={() => onLogin()}>
+                    <Text style={styles.loginButtonText}>Login</Text>
+                </TouchableOpacity>
+                {showErrorBox ? <View style={styles.errorView}>
+                    <Text style={styles.errorText}>{errorText}</Text>
+                </View> : null}
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    );
 }
+
+export default Login;
 
 const styles = StyleSheet.create({
     root: {
