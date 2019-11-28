@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import {
+    NavigationParams,
+    NavigationScreenProp,
+    NavigationState,
+  } from 'react-navigation';
 
 export interface Props {
-    navigation: any,
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>,
 }
 
 interface State {
@@ -14,6 +19,11 @@ interface State {
 export default class Login extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
+        
+        // const [username, setUsername] = useState('');
+        // const [password, setPassword] = useState('');
+        // const [showErrorBox, setShowErrorBox] = useState(false);
+
         this.state = {
             username: '',
             password: '',

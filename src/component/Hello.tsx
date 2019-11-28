@@ -1,8 +1,13 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import {
+    NavigationParams,
+    NavigationScreenProp,
+    NavigationState,
+  } from 'react-navigation';
 
 export interface Props {
-    navigation: any
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
 interface State {
@@ -14,9 +19,9 @@ export default class Hello extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            enthusiasmLevel: this.props.navigation.state.params.enthusiasmLevel || 1,
-            username: this.props.navigation.state.params.username || '',
-        };
+            enthusiasmLevel: this.props.navigation.state.params ? this.props.navigation.state.params.enthusiasmLevel || 1 : 1,
+            username: this.props.navigation.state.params? this.props.navigation.state.params.username || '' : '',
+        }; 
     }
 
     onIncrement = () =>
