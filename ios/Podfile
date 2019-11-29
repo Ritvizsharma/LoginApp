@@ -34,11 +34,11 @@ target 'AwesomeProject' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'appcenter', :path => '../node_modules/appcenter'
+  pod 'appcenter', :path => '../node_modules/appcenter/ios'
 
-  pod 'appcenter-analytics', :path => '../node_modules/appcenter-analytics'
+  pod 'appcenter-analytics', :path => '../node_modules/appcenter-analytics/ios'
 
-  pod 'appcenter-crashes', :path => '../node_modules/appcenter-crashes'
+  pod 'appcenter-crashes', :path => '../node_modules/appcenter-crashes/ios'
 
   target 'AwesomeProjectTests' do
     inherit! :search_paths
